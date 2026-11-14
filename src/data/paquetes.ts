@@ -1,4 +1,4 @@
-// Precios por chica (MXN). Ubicaciones de ejemplo, por confirmar.
+// Precios por chica (MXN). La ubicación exacta se define al reservar.
 
 export type Nivel = "basica" | "premium" | "superpremium";
 
@@ -37,7 +37,7 @@ export const paquetes: Paquete[] = [
     fotos: 30,
     clips: 10,
     diasGestion: 15,
-    catering: false,
+    catering: true,
   },
   {
     chicas: 3,
@@ -48,7 +48,7 @@ export const paquetes: Paquete[] = [
     fotos: 50,
     clips: 13,
     diasGestion: 30,
-    catering: false,
+    catering: true,
   },
 ];
 

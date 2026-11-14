@@ -18,7 +18,7 @@ const pasos = [
   },
   {
     titulo: "Recibe y crece",
-    texto: "Tus fotos y clips llegan en 3 días hábiles, y gestionamos tus publicaciones de 15 a 30 días según tu paquete.",
+    texto: "Tus fotos y clips llegan en 6 días hábiles, y gestionamos tus publicaciones de 15 a 30 días según tu paquete.",
   },
 ];
 
@@ -33,7 +33,7 @@ const preguntas = [
   },
   {
     p: "¿Cómo pago?",
-    r: "Con Mercado Pago o por transferencia. El anticipo es del 50% y el resto se liquida el día de la sesión.",
+    r: "En efectivo. El anticipo es del 50% y el resto se liquida el día de la sesión. Te contactamos por WhatsApp para coordinar la entrega del anticipo.",
   },
   {
     p: "¿Quién ve mi contenido?",

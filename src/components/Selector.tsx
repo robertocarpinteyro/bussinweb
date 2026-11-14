@@ -28,7 +28,7 @@ export default function Selector() {
     { icono: Reloj, texto: `Producción: ${paquete.produccion}` },
     ...(paquete.catering ? [{ icono: Catering, texto: "Catering incluido" }] : []),
     { icono: Camara, texto: "Cámara e iluminación profesional" },
-    { icono: Nube, texto: "Entrega por Drive en 3 días hábiles" },
+    { icono: Nube, texto: "Entrega por Drive en 6 días hábiles" },
   ];
 
   useEffect(() => {
@@ -228,7 +228,7 @@ export default function Selector() {
         </ul>
       </div>
       <p className="mt-6 text-sm text-bruma/70">
-        Ubicaciones de ejemplo. Las definitivas se anuncian pronto.
+        Ubicaciones de referencia. La ubicación exacta se define contigo al reservar tu paquete.
       </p>
     </div>
   );

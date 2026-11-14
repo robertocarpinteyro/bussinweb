@@ -115,12 +115,11 @@ export default function ReservaDemo() {
               {dosDigitos(h)}:{dosDigitos(m)}:{dosDigitos(s)}
             </p>
             <p className="mt-3 text-bruma">
-              Tienes este tiempo para pagar el 50% de anticipo. Si cierras la página y vuelves, el
-              tiempo sigue corriendo.
+              Tienes este tiempo para entregar el 50% de anticipo en efectivo. Te contactamos por
+              WhatsApp para coordinarlo. Si cierras la página y vuelves, el tiempo sigue corriendo.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <span className="rounded-full bg-magenta px-5 py-3 font-bold text-white">Pagar con Mercado Pago</span>
-              <span className="rounded-full border-2 border-arena/40 px-5 py-3 font-bold">Pagar por transferencia</span>
+              <span className="rounded-full bg-magenta px-5 py-3 font-bold text-white">Pago en efectivo</span>
             </div>
             <button onClick={cancelar} className="mt-5 self-start text-sm text-bruma underline underline-offset-4">
               Reiniciar vista previa

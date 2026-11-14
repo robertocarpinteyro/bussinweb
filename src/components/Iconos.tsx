@@ -59,3 +59,16 @@ export const Chica = ({ className }: P) => (
     <path d="M4 21c.5-5 3.6-8 8-8s7.5 3 8 8z" />
   </svg>
 );
+
+export const Catering = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <path d="M3.5 16.5h17M5 16.5a7 7 0 0 1 14 0M12 9.5V8M10.5 8h3M4 19.5h16" />
+  </svg>
+);
+
+export const Reloj = ({ className }: P) => (
+  <svg {...base} className={className}>
+    <circle cx="12" cy="12" r="8.5" />
+    <path d="M12 7.5V12l3 2" />
+  </svg>
+);

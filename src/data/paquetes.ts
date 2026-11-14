@@ -1,21 +1,58 @@
-// Datos provisionales del prototipo. Precios y ubicaciones por confirmar.
+// Precios por chica (MXN). Ubicaciones de ejemplo, por confirmar.
 
 export type Nivel = "basica" | "premium" | "superpremium";
 
 export interface Paquete {
   chicas: number;
-  precio: number;
-  dias: number;
+  precioPorChica: number;
   nivel: Nivel;
+  ubicacion: string;
+  produccion: string;
+  fotos: number;
+  clips: number;
+  notaClips?: string;
+  diasGestion: number;
+  catering: boolean;
 }
 
 export const paquetes: Paquete[] = [
-  { chicas: 1, precio: 5000, dias: 1, nivel: "basica" },
-  { chicas: 2, precio: 9000, dias: 1, nivel: "basica" },
-  { chicas: 3, precio: 13500, dias: 1, nivel: "premium" },
-  { chicas: 5, precio: 20000, dias: 1, nivel: "premium" },
-  { chicas: 7, precio: 26000, dias: 2, nivel: "superpremium" },
+  {
+    chicas: 1,
+    precioPorChica: 6000,
+    nivel: "basica",
+    ubicacion: "Motel o Airbnb sencillo, sin jacuzzi",
+    produccion: "2.5 horas",
+    fotos: 30,
+    clips: 10,
+    notaClips: "hasta 30 s c/u; 5 pueden ser largos para OnlyFans",
+    diasGestion: 15,
+    catering: true,
+  },
+  {
+    chicas: 2,
+    precioPorChica: 5500,
+    nivel: "premium",
+    ubicacion: "Motel luxury con jacuzzi o cualquier ubicación dentro del precio",
+    produccion: "5 horas",
+    fotos: 30,
+    clips: 10,
+    diasGestion: 15,
+    catering: false,
+  },
+  {
+    chicas: 3,
+    precioPorChica: 5000,
+    nivel: "superpremium",
+    ubicacion: "Ubicación premium con rodaje de día y de noche",
+    produccion: "Día completo (día y noche)",
+    fotos: 50,
+    clips: 13,
+    diasGestion: 30,
+    catering: false,
+  },
 ];
+
+export const precioTotal = (p: Paquete) => p.precioPorChica * p.chicas;
 
 export type Escena = "neon" | "terracota" | "loft" | "jacuzzi" | "mansion";
 
@@ -40,7 +77,7 @@ export const ubicaciones: Ubicacion[] = [
   {
     id: "terracota",
     nombre: "Cuarto Terracota",
-    descripcion: "Hotel en el centro de Puebla, muros de talavera y luz cálida.",
+    descripcion: "Airbnb estándar en el centro de Puebla, muros de talavera y luz cálida.",
     nivel: "basica",
     minimo: 1,
     escena: "terracota",
@@ -50,31 +87,31 @@ export const ubicaciones: Ubicacion[] = [
     nombre: "Loft Angelópolis",
     descripcion: "Ventanales de piso a techo con la ciudad de fondo.",
     nivel: "premium",
-    minimo: 3,
+    minimo: 2,
     escena: "loft",
   },
   {
     id: "jacuzzi",
     nombre: "Suite Jacuzzi",
-    descripcion: "Jacuzzi privado, espejos y luz ambiental.",
+    descripcion: "Motel luxury con jacuzzi privado, espejos y luz ambiental.",
     nivel: "premium",
-    minimo: 3,
+    minimo: 2,
     escena: "jacuzzi",
   },
   {
     id: "mansion",
     nombre: "La Mansión",
-    descripcion: "Casa completa con alberca y jardín, todo el día para ustedes.",
+    descripcion: "Casa completa con alberca y jardín, rodaje de día y de noche.",
     nivel: "superpremium",
-    minimo: 7,
+    minimo: 3,
     escena: "mansion",
   },
 ];
 
 export const nombreNivel: Record<Nivel, string> = {
-  basica: "Básica",
-  premium: "Premium",
-  superpremium: "Súper premium",
+  basica: "Estándar",
+  premium: "Luxury",
+  superpremium: "Premium",
 };
 
 export const pesos = (n: number) =>

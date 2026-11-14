@@ -18,7 +18,7 @@ const pasos = [
   },
   {
     titulo: "Recibe y crece",
-    texto: "Tus fotos y clips llegan en 3 días hábiles, y durante un mes manejamos tu cuenta.",
+    texto: "Tus fotos y clips llegan en 3 días hábiles, y gestionamos tus publicaciones de 15 a 30 días según tu paquete.",
   },
 ];
 
@@ -41,11 +41,11 @@ const preguntas = [
   },
   {
     p: "¿En qué consiste la gestión de cuenta?",
-    r: "Durante un mes respondemos mensajes y promocionamos tu perfil en foros, redes y espacios de publicidad.",
+    r: "Publicamos y programamos tu contenido en OnlyFans y redes sociales durante 15 días (paquetes de 1 y 2 chicas) o 30 días (paquete de 3). No incluye contestar mensajes.",
   },
   {
     p: "¿Dónde son las sesiones?",
-    r: "En hoteles y moteles seleccionados de Puebla y Cholula. La ubicación depende de tu paquete.",
+    r: "En moteles, Airbnbs y ubicaciones seleccionadas de Puebla y Cholula. Con 1 chica es motel o habitación sencilla; con 2, motel luxury con jacuzzi; con 3, ubicación premium con rodaje de día y noche.",
   },
 ];
 
@@ -97,8 +97,8 @@ export default function Inicio() {
             Nosotros grabamos.
           </h1>
           <p className="mt-6 max-w-xl text-lg font-medium text-arena/90 sm:text-xl">
-            Sesiones de foto y video para creadoras de contenido, con un mes de gestión de tu
-            cuenta incluido.
+            Sesiones de foto y video para creadoras de contenido, con gestión de tus publicaciones
+            en OnlyFans y redes incluida.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <a

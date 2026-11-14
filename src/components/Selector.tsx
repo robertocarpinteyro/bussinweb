@@ -2,17 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
-import { nombreNivel, paquetes, pesos, ubicaciones } from "@/data/paquetes";
+import { nombreNivel, paquetes, pesos, precioTotal, ubicaciones } from "@/data/paquetes";
 import Escena from "./Escena";
-import { Camara, Candado, Chat, Chica, Clip, Foto, Nube } from "./Iconos";
-
-const incluye = [
-  { icono: Camara, texto: "Cámara e iluminación profesional" },
-  { icono: Foto, texto: "50 fotos editadas" },
-  { icono: Clip, texto: "10 clips con corrección de color" },
-  { icono: Nube, texto: "Entrega por Drive en 3 días hábiles" },
-  { icono: Chat, texto: "1 mes de gestión de tu cuenta" },
-];
+import { Camara, Candado, Catering, Chat, Chica, Clip, Foto, Nube, Reloj } from "./Iconos";
 
 export default function Selector() {
   const [chicas, setChicas] = useState(1);
@@ -21,6 +13,23 @@ export default function Selector() {
   const reduce = useReducedMotion();
 
   const paquete = paquetes.find((p) => p.chicas === chicas)!;
+  const total = precioTotal(paquete);
+
+  const incluye = [
+    { icono: Foto, texto: `${paquete.fotos} fotos editadas` },
+    {
+      icono: Clip,
+      texto: `${paquete.clips} clips de video${paquete.notaClips ? ` (${paquete.notaClips})` : ""}`,
+    },
+    {
+      icono: Chat,
+      texto: `${paquete.diasGestion} días de gestión de publicaciones en OnlyFans y redes (no incluye contestar mensajes)`,
+    },
+    { icono: Reloj, texto: `Producción: ${paquete.produccion}` },
+    ...(paquete.catering ? [{ icono: Catering, texto: "Catering incluido" }] : []),
+    { icono: Camara, texto: "Cámara e iluminación profesional" },
+    { icono: Nube, texto: "Entrega por Drive en 3 días hábiles" },
+  ];
 
   useEffect(() => {
     const antes = previo.current;
@@ -30,7 +39,7 @@ export default function Selector() {
       setAviso(
         nuevas.length === 1
           ? `Desbloqueaste ${nuevas[0].nombre}`
-          : `Desbloqueaste ${nuevas.length} ubicaciones ${nombreNivel[nuevas[0].nivel].toLowerCase()}`
+          : `Desbloqueaste ${nuevas.length} ubicaciones nuevas`
       );
       const t = setTimeout(() => setAviso(null), 2600);
       return () => clearTimeout(t);
@@ -40,7 +49,7 @@ export default function Selector() {
   return (
     <div>
       {/* Selector de número de chicas */}
-      <div role="radiogroup" aria-label="¿Cuántas chicas vienen?" className="grid grid-cols-5 gap-2 sm:gap-4">
+      <div role="radiogroup" aria-label="¿Cuántas chicas vienen?" className="grid grid-cols-3 gap-2 sm:gap-4">
         {paquetes.map((p) => {
           const activo = p.chicas === chicas;
           return (
@@ -57,6 +66,9 @@ export default function Selector() {
             >
               <span className="font-display text-4xl leading-none sm:text-6xl">{p.chicas}</span>
               <span className="mt-1 text-xs font-semibold sm:text-sm">{p.chicas === 1 ? "chica" : "chicas"}</span>
+              <span className={`mt-1 text-[11px] font-bold sm:text-xs ${activo ? "text-white/90" : "text-ocaso"}`}>
+                {pesos(p.precioPorChica)} c/u
+              </span>
               <span className="mt-2 hidden gap-0.5 sm:flex" aria-hidden="true">
                 {Array.from({ length: p.chicas }).map((_, i) => (
                   <Chica key={i} className="h-3.5 w-3.5" />
@@ -91,33 +103,33 @@ export default function Selector() {
               Paquete de {chicas} {chicas === 1 ? "chica" : "chicas"}
             </p>
             <motion.p
-              key={paquete.precio}
+              key={total}
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-1 font-display text-5xl sm:text-6xl"
             >
-              {pesos(paquete.precio)}
+              {pesos(total)}
             </motion.p>
             <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded-xl bg-white/70 p-3">
                 <dt className="text-uva">Por chica</dt>
-                <dd className="text-lg font-bold">{pesos(Math.round(paquete.precio / chicas))}</dd>
+                <dd className="text-lg font-bold">{pesos(paquete.precioPorChica)}</dd>
               </div>
               <div className="rounded-xl bg-white/70 p-3">
                 <dt className="text-uva">Anticipo para apartar</dt>
-                <dd className="text-lg font-bold">{pesos(paquete.precio / 2)}</dd>
+                <dd className="text-lg font-bold">{pesos(total / 2)}</dd>
               </div>
               <div className="rounded-xl bg-white/70 p-3">
-                <dt className="text-uva">Ubicaciones</dt>
+                <dt className="text-uva">Ubicación</dt>
                 <dd className="text-lg font-bold">{nombreNivel[paquete.nivel]}</dd>
               </div>
               <div className="rounded-xl bg-white/70 p-3">
-                <dt className="text-uva">Sesión</dt>
-                <dd className="text-lg font-bold">
-                  {paquete.dias} {paquete.dias === 1 ? "día" : "días"}
-                </dd>
+                <dt className="text-uva">Producción</dt>
+                <dd className="text-lg font-bold">{paquete.produccion}</dd>
               </div>
             </dl>
+
+            <p className="mt-4 text-sm text-uva">{paquete.ubicacion}</p>
 
             <p className="mt-6 font-bold">Cada chica recibe</p>
             <ul className="mt-3 space-y-2.5">

@@ -6,7 +6,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Bussin' | Producción de contenido para creadoras",
   description:
-    "Sesiones de foto y video para creadoras de contenido en Puebla y Cholula, con un mes de gestión de cuenta incluido.",
+    "Sesiones de foto y video para creadoras de contenido en Puebla y Cholula, con gestión de publicaciones en OnlyFans y redes incluida.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

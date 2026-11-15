@@ -17,7 +17,7 @@ export const paquetes: Paquete[] = [
 
 export const CHICAS_ESPECIAL = 3;
 
-// El ambiente Lujo es un extra que se puede agregar a cualquier paquete.
+// El ambiente Lujo es un extra que solo se puede agregar al paquete de 3 chicas.
 export const PRECIO_LUJO = 2000;
 
 export type Escena = "neon" | "terracota" | "loft" | "jacuzzi" | "mansion";

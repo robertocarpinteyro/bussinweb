@@ -47,6 +47,11 @@ export default function Selector() {
     }
   }
 
+  // Lujo solo existe en el paquete de 3 chicas: si bajan de nivel, se quita.
+  useEffect(() => {
+    if (!especial) setLujo(false);
+  }, [especial]);
+
   useEffect(() => {
     const antes = previo.current;
     previo.current = chicas;
@@ -206,6 +211,7 @@ export default function Selector() {
               </div>
             </dl>
 
+            {especial ? (
             <button
               type="button"
               role="switch"
@@ -228,6 +234,17 @@ export default function Selector() {
                 />
               </span>
             </button>
+            ) : (
+              <div className="mt-3 flex items-center justify-between gap-4 rounded-xl bg-white/[0.02] p-3 ring-1 ring-white/5">
+                <span>
+                  <span className="block font-bold text-bruma">Ambiente Lujo</span>
+                  <span className="block text-sm text-bruma/70">
+                    Disponible en el paquete de {CHICAS_ESPECIAL} chicas por {pesos(PRECIO_LUJO)} más
+                  </span>
+                </span>
+                <Candado className="h-5 w-5 shrink-0 text-oro" />
+              </div>
+            )}
 
             <p className="mt-6 font-bold">Cada chica recibe</p>
             <ul className="mt-3 space-y-2.5">
@@ -259,7 +276,11 @@ export default function Selector() {
                 {especial
                   ? "Tienes el catálogo especial completo."
                   : `Con ${chicas === 1 ? "1 chica" : "2 chicas"} eliges entre ${totalBasico} ambientes. Con ${CHICAS_ESPECIAL} se abre el catálogo especial.`}{" "}
-                {lujo ? "Ambiente Lujo incluido." : `El ambiente Lujo se agrega por ${pesos(PRECIO_LUJO)} más.`}
+                {lujo
+                  ? "Ambiente Lujo incluido."
+                  : especial
+                    ? `Puedes agregar el ambiente Lujo por ${pesos(PRECIO_LUJO)} más.`
+                    : ""}
               </p>
             </div>
             <a
@@ -325,7 +346,7 @@ export default function Selector() {
                             <Candado className="h-7 w-7" />
                           </span>
                           <span className="font-display text-arena">
-                            {esLujo ? `Desbloquéalo por ${pesos(PRECIO_LUJO)} más` : `Se desbloquea con ${CHICAS_ESPECIAL} chicas`}
+                            {esLujo && especial ? `Desbloquéalo por ${pesos(PRECIO_LUJO)} más` : `Se desbloquea con ${CHICAS_ESPECIAL} chicas`}
                           </span>
                         </motion.div>
                       )}
@@ -350,15 +371,15 @@ export default function Selector() {
                         {bloqueado ? "???" : a.nombre}
                       </h4>
                       <p className={`mt-1 text-sm ${bloqueado ? "text-bruma/40" : "text-bruma"}`}>
-                        {bloqueado ? (esLujo ? "Ambiente exclusivo para cualquier paquete." : "Parte del catálogo especial.") : a.descripcion}
+                        {bloqueado ? (esLujo ? `Extra del paquete de ${CHICAS_ESPECIAL} chicas por ${pesos(PRECIO_LUJO)}.` : "Parte del catálogo especial.") : a.descripcion}
                       </p>
                     </div>
                     {bloqueado && (
                       <button
-                        onClick={() => (esLujo ? cambiarLujo(true) : setChicas(CHICAS_ESPECIAL))}
+                        onClick={() => (esLujo && especial ? cambiarLujo(true) : setChicas(CHICAS_ESPECIAL))}
                         className="shrink-0 rounded-full border border-oro/70 px-3 py-1.5 text-sm font-bold text-oro transition hover:bg-oro hover:text-noche"
                       >
-                        {esLujo ? `Agregar por ${pesos(PRECIO_LUJO)}` : `Subir a ${CHICAS_ESPECIAL}`}
+                        {esLujo && especial ? `Agregar por ${pesos(PRECIO_LUJO)}` : `Subir a ${CHICAS_ESPECIAL}`}
                       </button>
                     )}
                     {esLujo && lujo && (

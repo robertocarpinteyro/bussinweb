@@ -3,11 +3,12 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import Selector from "@/components/Selector";
 import ReservaDemo from "@/components/ReservaDemo";
+import { whatsapp } from "@/data/paquetes";
 
 const pasos = [
   {
     titulo: "Arma tu paquete",
-    texto: "Elige cuántas van a la sesión. Entre más sean, mejores ubicaciones desbloquean.",
+    texto: "Elige cuántas van a la sesión y si la quieren de día o de noche. Con 3 chicas se abre el catálogo especial de ubicaciones.",
   },
   {
     titulo: "Aparta tu fecha",
@@ -46,7 +47,7 @@ const preguntas = [
   },
   {
     p: "¿Dónde son las sesiones?",
-    r: "En hoteles y moteles seleccionados de Puebla y Cholula. La ubicación depende de tu paquete.",
+    r: "En ubicaciones seleccionadas de Puebla y Cholula. Los paquetes de 1 y 2 chicas eligen del catálogo básico; desde 3 chicas tienen acceso al catálogo especial, con más opciones.",
   },
 ];
 
@@ -77,8 +78,8 @@ export default function Inicio() {
         <div className="mx-auto max-w-6xl">
           <h2 className="font-display text-4xl sm:text-6xl">Arma tu squad</h2>
           <p className="mt-4 max-w-xl text-lg text-bruma">
-            ¿Cuántas vienen a la sesión? Entre más sean, menos paga cada una y más lugares se
-            desbloquean.
+            ¿Cuántas vienen a la sesión? Entre más sean, menos paga cada una, y con 3 se abre el
+            catálogo especial de ubicaciones.
           </p>
           <div className="mt-10">
             <Selector />
@@ -130,7 +131,9 @@ export default function Inicio() {
               Te respondemos por WhatsApp y te ayudamos a elegir el paquete que más te conviene.
             </p>
             <a
-              href="#"
+              href={whatsapp("Hola, tengo dudas sobre las sesiones de Bussin'.")}
+              target="_blank"
+              rel="noopener noreferrer"
               className="relative mt-8 inline-block rounded-full bg-magenta px-7 py-4 font-display text-lg text-white shadow-[0_0_30px_-6px_rgba(224,57,122,0.9)] transition hover:bg-rec"
             >
               Escribir por WhatsApp

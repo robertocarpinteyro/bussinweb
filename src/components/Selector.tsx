@@ -10,10 +10,11 @@ import {
   nombreHorario,
   paquetes,
   pesos,
-  urlFoto,
+  PRECIO_LUJO,
   whatsapp,
 } from "@/data/paquetes";
 import Escena from "./Escena";
+import FotoAmbiente from "./FotoAmbiente";
 import { Camara, Candado, Chat, Chica, Clip, Foto, Luna, Nube, Sol, WhatsApp } from "./Iconos";
 
 const incluye = [
@@ -29,12 +30,22 @@ const totalBasico = ambientes.filter((a) => a.catalogo === "basico").length;
 export default function Selector() {
   const [chicas, setChicas] = useState(1);
   const [horario, setHorario] = useState<Horario>("noche");
+  const [lujo, setLujo] = useState(false);
   const [aviso, setAviso] = useState<string | null>(null);
   const previo = useRef(chicas);
   const reduce = useReducedMotion();
 
   const paquete = paquetes.find((p) => p.chicas === chicas)!;
   const especial = paquete.catalogo === "especial";
+  const total = paquete.precio + (lujo ? PRECIO_LUJO : 0);
+
+  function cambiarLujo(activar: boolean) {
+    setLujo(activar);
+    if (activar) {
+      setAviso("Desbloqueaste el ambiente Lujo");
+      setTimeout(() => setAviso(null), 2600);
+    }
+  }
 
   useEffect(() => {
     const antes = previo.current;
@@ -48,7 +59,7 @@ export default function Selector() {
 
   const mensaje = `Hola, me interesa el paquete de ${chicas} ${chicas === 1 ? "chica" : "chicas"} ${
     horario === "dia" ? "de día" : "de noche"
-  }. ¿Me pueden compartir el catálogo de ubicaciones?`;
+  }${lujo ? " con ambiente Lujo" : ""}. ¿Me pueden compartir el catálogo de ubicaciones?`;
 
   return (
     <div>
@@ -107,10 +118,10 @@ export default function Selector() {
           {aviso && (
             <motion.p
               role="status"
-              initial={{ opacity: 0, y: -8, scale: 0.95 }}
+              initial={{ opacity: 0, y: 12, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: -8 }}
-              className="absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-noche/90 px-5 py-2 font-display text-sm text-oro shadow-[0_0_30px_-6px_rgba(243,199,122,0.7)] ring-1 ring-oro/60 backdrop-blur"
+              exit={{ opacity: 0, y: 12 }}
+              className="fixed bottom-6 left-1/2 z-50 -translate-x-1/2 whitespace-nowrap rounded-full bg-noche/90 px-5 py-2 font-display text-sm text-oro shadow-[0_0_30px_-6px_rgba(243,199,122,0.7)] ring-1 ring-oro/60 backdrop-blur"
             >
               {aviso}
             </motion.p>
@@ -126,13 +137,18 @@ export default function Selector() {
               Paquete de {chicas} {chicas === 1 ? "chica" : "chicas"}
             </p>
             <motion.p
-              key={paquete.precio}
+              key={total}
               initial={reduce ? false : { opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               className="mt-1 font-display text-5xl sm:text-6xl"
             >
-              {pesos(paquete.precio)}
+              {pesos(total)}
             </motion.p>
+            {lujo && (
+              <p className="mt-1 text-sm text-bruma">
+                {pesos(paquete.precio)} del paquete + {pesos(PRECIO_LUJO)} del ambiente Lujo
+              </p>
+            )}
 
             <fieldset className="mt-6">
               <legend className="mb-2 text-sm font-semibold text-bruma">¿Tu sesión es de día o de noche?</legend>
@@ -173,11 +189,11 @@ export default function Selector() {
             <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
               <div className="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
                 <dt className="text-bruma">Por chica</dt>
-                <dd className="text-lg font-bold">{pesos(Math.round(paquete.precio / chicas))}</dd>
+                <dd className="text-lg font-bold">{pesos(Math.round(total / chicas))}</dd>
               </div>
               <div className="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
                 <dt className="text-bruma">Anticipo para apartar</dt>
-                <dd className="text-lg font-bold">{pesos(paquete.precio / 2)}</dd>
+                <dd className="text-lg font-bold">{pesos(total / 2)}</dd>
               </div>
               <div className="col-span-2 rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
                 <dt className="text-bruma">Ubicaciones</dt>
@@ -189,6 +205,29 @@ export default function Selector() {
                 </dd>
               </div>
             </dl>
+
+            <button
+              type="button"
+              role="switch"
+              aria-checked={lujo}
+              onClick={() => cambiarLujo(!lujo)}
+              className={`mt-3 flex w-full items-center justify-between gap-4 rounded-xl p-3 text-left ring-1 transition ${
+                lujo ? "bg-oro/10 ring-oro/60" : "bg-white/[0.04] ring-white/5 hover:ring-oro/40"
+              }`}
+            >
+              <span>
+                <span className="block font-bold">Ambiente Lujo</span>
+                <span className="block text-sm text-bruma">Agrégalo por {pesos(PRECIO_LUJO)} más</span>
+              </span>
+              <span
+                className={`relative h-7 w-12 shrink-0 rounded-full transition-colors ${lujo ? "bg-oro" : "bg-white/15"}`}
+                aria-hidden="true"
+              >
+                <span
+                  className={`absolute top-1 h-5 w-5 rounded-full bg-white shadow transition-all ${lujo ? "left-6" : "left-1"}`}
+                />
+              </span>
+            </button>
 
             <p className="mt-6 font-bold">Cada chica recibe</p>
             <ul className="mt-3 space-y-2.5">
@@ -218,8 +257,9 @@ export default function Selector() {
               <h3 className="font-display text-2xl">Catálogo de ambientes</h3>
               <p className="mt-1 text-bruma">
                 {especial
-                  ? "Tienes acceso a todos los ambientes."
-                  : `Con ${chicas === 1 ? "1 chica" : "2 chicas"} eliges entre ${totalBasico} ambientes. Con ${CHICAS_ESPECIAL} se abre el catálogo especial.`}
+                  ? "Tienes el catálogo especial completo."
+                  : `Con ${chicas === 1 ? "1 chica" : "2 chicas"} eliges entre ${totalBasico} ambientes. Con ${CHICAS_ESPECIAL} se abre el catálogo especial.`}{" "}
+                {lujo ? "Ambiente Lujo incluido." : `El ambiente Lujo se agrega por ${pesos(PRECIO_LUJO)} más.`}
               </p>
             </div>
             <a
@@ -235,7 +275,8 @@ export default function Selector() {
 
           <ul className="mt-6 grid gap-4 sm:grid-cols-2">
             {ambientes.map((a, i) => {
-              const bloqueado = a.catalogo === "especial" && !especial;
+              const esLujo = a.catalogo === "lujo";
+              const bloqueado = esLujo ? !lujo : a.catalogo === "especial" && !especial;
               const ancho = i === ambientes.length - 1 && ambientes.length % 2 === 1;
               return (
                 <motion.li
@@ -252,14 +293,10 @@ export default function Selector() {
                       }`}
                     >
                       <Escena tipo={a.escena} />
-                      <img
-                        src={urlFoto(a.foto.id)}
-                        srcSet={`${urlFoto(a.foto.id, 600)} 600w, ${urlFoto(a.foto.id, 900)} 900w, ${urlFoto(a.foto.id, 1400)} 1400w`}
-                        sizes={ancho ? "(min-width: 1024px) 660px, 100vw" : "(min-width: 1024px) 330px, (min-width: 640px) 50vw, 100vw"}
+                      <FotoAmbiente
+                        id={a.foto.id}
                         alt={bloqueado ? "" : `Ambiente ${a.nombre}`}
-                        loading="lazy"
-                        onError={(e) => (e.currentTarget.style.display = "none")}
-                        className="absolute inset-0 h-full w-full object-cover"
+                        sizes={ancho ? "(min-width: 1024px) 660px, 100vw" : "(min-width: 1024px) 330px, (min-width: 640px) 50vw, 100vw"}
                       />
                     </div>
 
@@ -287,7 +324,9 @@ export default function Selector() {
                           <span className="grid h-14 w-14 place-items-center rounded-full bg-noche/80 text-oro ring-1 ring-oro/60 backdrop-blur">
                             <Candado className="h-7 w-7" />
                           </span>
-                          <span className="font-display text-arena">Se desbloquea con {CHICAS_ESPECIAL} chicas</span>
+                          <span className="font-display text-arena">
+                            {esLujo ? `Desbloquéalo por ${pesos(PRECIO_LUJO)} más` : `Se desbloquea con ${CHICAS_ESPECIAL} chicas`}
+                          </span>
                         </motion.div>
                       )}
                     </AnimatePresence>
@@ -296,7 +335,9 @@ export default function Selector() {
                       className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-bold ${
                         a.catalogo === "basico"
                           ? "bg-noche/70 text-arena ring-1 ring-white/20 backdrop-blur"
-                          : "bg-oro text-noche"
+                          : esLujo
+                            ? "bg-gradient-to-r from-oro to-magenta text-noche"
+                            : "bg-oro text-noche"
                       }`}
                     >
                       {nombreCatalogo[a.catalogo]}
@@ -309,15 +350,23 @@ export default function Selector() {
                         {bloqueado ? "???" : a.nombre}
                       </h4>
                       <p className={`mt-1 text-sm ${bloqueado ? "text-bruma/40" : "text-bruma"}`}>
-                        {bloqueado ? "Parte del catálogo especial." : a.descripcion}
+                        {bloqueado ? (esLujo ? "Ambiente exclusivo para cualquier paquete." : "Parte del catálogo especial.") : a.descripcion}
                       </p>
                     </div>
                     {bloqueado && (
                       <button
-                        onClick={() => setChicas(CHICAS_ESPECIAL)}
+                        onClick={() => (esLujo ? cambiarLujo(true) : setChicas(CHICAS_ESPECIAL))}
                         className="shrink-0 rounded-full border border-oro/70 px-3 py-1.5 text-sm font-bold text-oro transition hover:bg-oro hover:text-noche"
                       >
-                        Subir a {CHICAS_ESPECIAL}
+                        {esLujo ? `Agregar por ${pesos(PRECIO_LUJO)}` : `Subir a ${CHICAS_ESPECIAL}`}
+                      </button>
+                    )}
+                    {esLujo && lujo && (
+                      <button
+                        onClick={() => cambiarLujo(false)}
+                        className="shrink-0 text-sm font-semibold text-bruma underline underline-offset-4 hover:text-arena"
+                      >
+                        Quitar
                       </button>
                     )}
                   </div>

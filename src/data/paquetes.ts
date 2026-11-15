@@ -1,6 +1,6 @@
 // Datos provisionales del prototipo. Precios y ambientes por confirmar.
 
-export type Catalogo = "basico" | "especial";
+export type Catalogo = "basico" | "especial" | "lujo";
 export type Horario = "dia" | "noche";
 
 export interface Paquete {
@@ -16,6 +16,9 @@ export const paquetes: Paquete[] = [
 ];
 
 export const CHICAS_ESPECIAL = 3;
+
+// El ambiente Lujo es un extra que se puede agregar a cualquier paquete.
+export const PRECIO_LUJO = 2000;
 
 export type Escena = "neon" | "terracota" | "loft" | "jacuzzi" | "mansion";
 
@@ -67,7 +70,7 @@ export const ambientes: Ambiente[] = [
     id: "lujo",
     nombre: "Lujo",
     descripcion: "Espacios amplios con acabados de lujo.",
-    catalogo: "especial",
+    catalogo: "lujo",
     escena: "mansion",
     foto: { id: "photo-1700586834181-1a2f3bd87eda", autor: "reza pratama" },
   },
@@ -80,6 +83,7 @@ export const urlFoto = (id: string, ancho = 900) =>
 export const nombreCatalogo: Record<Catalogo, string> = {
   basico: "Básico",
   especial: "Especial",
+  lujo: "Lujo",
 };
 
 export const nombreHorario: Record<Horario, string> = {

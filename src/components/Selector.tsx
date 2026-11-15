@@ -49,10 +49,10 @@ export default function Selector() {
               role="radio"
               aria-checked={activo}
               onClick={() => setChicas(p.chicas)}
-              className={`group relative flex flex-col items-center rounded-2xl border-2 px-1 py-3 transition-colors sm:py-5 ${
+              className={`group relative flex flex-col items-center rounded-2xl border px-1 py-3 transition-colors sm:py-5 ${
                 activo
-                  ? "-rotate-2 border-magenta bg-magenta text-white shadow-[6px_6px_0_#ff9a4d]"
-                  : "border-uva bg-ciruela text-bruma hover:border-magenta/60 hover:text-arena"
+                  ? "border-magenta bg-gradient-to-b from-magenta to-[#a8205a] text-white shadow-[0_0_36px_-8px_rgba(224,57,122,0.95)]"
+                  : "border-white/10 bg-white/[0.03] text-bruma hover:border-magenta/50 hover:text-arena"
               }`}
             >
               <span className="font-display text-4xl leading-none sm:text-6xl">{p.chicas}</span>
@@ -75,7 +75,7 @@ export default function Selector() {
               initial={{ opacity: 0, y: -8, scale: 0.95 }}
               animate={{ opacity: 1, y: 0, scale: 1 }}
               exit={{ opacity: 0, y: -8 }}
-              className="absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-ocaso px-5 py-2 font-display text-sm text-noche shadow-[4px_4px_0_#1a0a2c]"
+              className="absolute left-1/2 top-4 z-20 -translate-x-1/2 whitespace-nowrap rounded-full bg-noche/90 px-5 py-2 font-display text-sm text-oro ring-1 ring-oro/60 shadow-[0_0_30px_-6px_rgba(243,199,122,0.7)] backdrop-blur"
             >
               {aviso}
             </motion.p>
@@ -86,8 +86,8 @@ export default function Selector() {
       <div className="mt-10 grid gap-8 lg:grid-cols-[minmax(0,5fr)_minmax(0,7fr)]">
         {/* Resumen del paquete */}
         <div className="lg:sticky lg:top-24 lg:self-start">
-          <div className="rounded-3xl bg-arena p-6 text-noche shadow-[8px_8px_0_#e0397a] sm:p-8">
-            <p className="font-semibold text-uva">
+          <div className="rounded-3xl bg-gradient-to-b from-ciruela to-noche p-6 ring-1 ring-white/10 shadow-[0_0_80px_-30px_rgba(224,57,122,0.7)] sm:p-8">
+            <p className="font-semibold text-magenta">
               Paquete de {chicas} {chicas === 1 ? "chica" : "chicas"}
             </p>
             <motion.p
@@ -99,20 +99,20 @@ export default function Selector() {
               {pesos(paquete.precio)}
             </motion.p>
             <dl className="mt-4 grid grid-cols-2 gap-3 text-sm">
-              <div className="rounded-xl bg-white/70 p-3">
-                <dt className="text-uva">Por chica</dt>
+              <div className="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
+                <dt className="text-bruma">Por chica</dt>
                 <dd className="text-lg font-bold">{pesos(Math.round(paquete.precio / chicas))}</dd>
               </div>
-              <div className="rounded-xl bg-white/70 p-3">
-                <dt className="text-uva">Anticipo para apartar</dt>
+              <div className="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
+                <dt className="text-bruma">Anticipo para apartar</dt>
                 <dd className="text-lg font-bold">{pesos(paquete.precio / 2)}</dd>
               </div>
-              <div className="rounded-xl bg-white/70 p-3">
-                <dt className="text-uva">Ubicaciones</dt>
+              <div className="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
+                <dt className="text-bruma">Ubicaciones</dt>
                 <dd className="text-lg font-bold">{nombreNivel[paquete.nivel]}</dd>
               </div>
-              <div className="rounded-xl bg-white/70 p-3">
-                <dt className="text-uva">Sesión</dt>
+              <div className="rounded-xl bg-white/[0.04] p-3 ring-1 ring-white/5">
+                <dt className="text-bruma">Sesión</dt>
                 <dd className="text-lg font-bold">
                   {paquete.dias} {paquete.dias === 1 ? "día" : "días"}
                 </dd>
@@ -123,17 +123,17 @@ export default function Selector() {
             <ul className="mt-3 space-y-2.5">
               {incluye.map(({ icono: Icono, texto }) => (
                 <li key={texto} className="flex items-center gap-3">
-                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-magenta text-white">
+                  <span className="grid h-8 w-8 shrink-0 place-items-center rounded-lg bg-magenta/15 text-magenta">
                     <Icono className="h-4.5 w-4.5" />
                   </span>
-                  <span className="text-[15px]">{texto}</span>
+                  <span className="text-[15px] text-arena/90">{texto}</span>
                 </li>
               ))}
             </ul>
 
             <a
               href="#reserva"
-              className="mt-7 block rounded-full bg-noche py-4 text-center font-display text-lg text-arena transition hover:bg-magenta"
+              className="mt-7 block rounded-full bg-magenta py-4 text-center font-display text-lg text-white shadow-[0_0_30px_-6px_rgba(224,57,122,0.9)] transition hover:bg-rec"
             >
               Elegir fecha
             </a>
@@ -149,9 +149,9 @@ export default function Selector() {
               <motion.li
                 key={u.id}
                 layout={!reduce}
-                className={`relative overflow-hidden rounded-3xl border-2 bg-ciruela ${
+                className={`relative overflow-hidden rounded-3xl bg-ciruela ring-1 ${
                   destacada ? "sm:col-span-2" : ""
-                } ${bloqueada ? "border-uva" : "border-magenta"}`}
+                } ${bloqueada ? "ring-white/10" : "ring-magenta/50"}`}
               >
                 <div className={`relative ${destacada ? "aspect-[16/7]" : "aspect-[16/10]"}`}>
                   <div
@@ -171,7 +171,7 @@ export default function Selector() {
                         transition={{ duration: 0.45 }}
                         className="absolute inset-0 flex flex-col items-center justify-center gap-2 text-center"
                       >
-                        <span className="grid h-14 w-14 place-items-center rounded-full bg-noche/80 text-ocaso ring-2 ring-ocaso/60">
+                        <span className="grid h-14 w-14 place-items-center rounded-full bg-noche/80 text-oro ring-1 ring-oro/60 backdrop-blur">
                           <Candado className="h-7 w-7" />
                         </span>
                         <span className="font-display text-arena">Se desbloquea con {u.minimo} chicas</span>
@@ -182,9 +182,9 @@ export default function Selector() {
                   <span
                     className={`absolute left-3 top-3 rounded-full px-3 py-1 text-xs font-bold ${
                       u.nivel === "basica"
-                        ? "bg-arena text-noche"
+                        ? "bg-noche/70 text-arena ring-1 ring-white/20 backdrop-blur"
                         : u.nivel === "premium"
-                          ? "bg-ocaso text-noche"
+                          ? "bg-oro text-noche"
                           : "bg-rec text-white"
                     }`}
                   >
@@ -204,7 +204,7 @@ export default function Selector() {
                   {bloqueada && (
                     <button
                       onClick={() => setChicas(u.minimo)}
-                      className="shrink-0 rounded-full border-2 border-ocaso px-3 py-1.5 text-sm font-bold text-ocaso transition hover:bg-ocaso hover:text-noche"
+                      className="shrink-0 rounded-full border border-oro/70 px-3 py-1.5 text-sm font-bold text-oro transition hover:bg-oro hover:text-noche"
                     >
                       Subir a {u.minimo}
                     </button>

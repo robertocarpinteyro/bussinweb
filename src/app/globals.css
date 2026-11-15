@@ -1,14 +1,14 @@
 @import "tailwindcss";
 
 @theme {
-  --color-noche: #1a0a2c;
-  --color-ciruela: #2c1045;
-  --color-uva: #45185e;
+  --color-noche: #08061a;
+  --color-ciruela: #120d2b;
+  --color-uva: #2b2152;
   --color-magenta: #e0397a;
   --color-rec: #ff2b2b;
-  --color-ocaso: #ff9a4d;
-  --color-arena: #fff0e4;
-  --color-bruma: #c9b3dd;
+  --color-oro: #f3c77a;
+  --color-arena: #f6f0ff;
+  --color-bruma: #a9a2c9;
 
   --font-display: "Bowlby One", system-ui, sans-serif;
   --font-sans: "Manrope Variable", system-ui, sans-serif;
@@ -31,7 +31,7 @@ body {
 }
 
 :focus-visible {
-  outline: 3px solid var(--color-ocaso);
+  outline: 2px solid var(--color-oro);
   outline-offset: 3px;
   border-radius: 6px;
 }
@@ -45,7 +45,14 @@ body {
 }
 
 .rec-glow {
-  box-shadow: 0 0 12px 2px rgb(255 43 43 / 0.7);
+  box-shadow: 0 0 14px 2px rgb(255 43 43 / 0.75);
+}
+
+/* Grano de película sobre el video del hero */
+.grano {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+  opacity: 0.18;
 }
 
 @media (prefers-reduced-motion: reduce) {

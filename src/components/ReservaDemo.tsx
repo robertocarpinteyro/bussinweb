@@ -66,7 +66,7 @@ export default function ReservaDemo() {
 
   return (
     <div className="grid gap-6 md:grid-cols-2">
-      <div className="rounded-3xl border-2 border-uva bg-ciruela p-5 sm:p-6">
+      <div className="rounded-3xl bg-white/[0.03] p-5 ring-1 ring-white/10 sm:p-6">
         <p className="font-display text-xl first-letter:uppercase">{nombreMes}</p>
         <div className="mt-4 grid grid-cols-7 gap-1.5 text-center text-sm">
           {DIAS.map((d, i) => (
@@ -94,7 +94,7 @@ export default function ReservaDemo() {
                       ? "cursor-not-allowed text-bruma/30 line-through"
                       : reserva
                         ? "text-bruma/50"
-                        : "bg-uva/60 text-arena hover:bg-magenta"
+                        : "bg-white/5 text-arena hover:bg-magenta"
                 }`}
               >
                 {dia}
@@ -104,7 +104,7 @@ export default function ReservaDemo() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center rounded-3xl bg-noche p-6 ring-2 ring-uva sm:p-8">
+      <div className="flex flex-col justify-center rounded-3xl bg-gradient-to-b from-ciruela to-noche p-6 ring-1 ring-white/10 sm:p-8">
         {reserva ? (
           <>
             <p className="flex items-center gap-2 font-bold text-rec">
@@ -119,8 +119,8 @@ export default function ReservaDemo() {
               tiempo sigue corriendo.
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <span className="rounded-full bg-magenta px-5 py-3 font-bold text-white">Pagar con Mercado Pago</span>
-              <span className="rounded-full border-2 border-arena/40 px-5 py-3 font-bold">Pagar por transferencia</span>
+              <span className="rounded-full bg-magenta px-5 py-3 font-bold text-white shadow-[0_0_24px_-6px_rgba(224,57,122,0.9)]">Pagar con Mercado Pago</span>
+              <span className="rounded-full border border-arena/30 px-5 py-3 font-bold">Pagar por transferencia</span>
             </div>
             <button onClick={cancelar} className="mt-5 self-start text-sm text-bruma underline underline-offset-4">
               Reiniciar vista previa

@@ -10,6 +10,7 @@ import {
   nombreHorario,
   paquetes,
   pesos,
+  urlFoto,
   whatsapp,
 } from "@/data/paquetes";
 import Escena from "./Escena";
@@ -47,7 +48,7 @@ export default function Selector() {
 
   const mensaje = `Hola, me interesa el paquete de ${chicas} ${chicas === 1 ? "chica" : "chicas"} ${
     horario === "dia" ? "de día" : "de noche"
-  }. ¿Me pueden compartir las ubicaciones disponibles?`;
+  }. ¿Me pueden compartir el catálogo de ubicaciones?`;
 
   return (
     <div>
@@ -228,7 +229,7 @@ export default function Selector() {
               className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-4 py-2.5 text-sm font-bold text-arena transition hover:border-[#25d366] hover:text-[#25d366]"
             >
               <WhatsApp className="h-4.5 w-4.5" />
-              Pregunta por las ubicaciones
+              Pregunta por el catálogo
             </a>
           </div>
 
@@ -246,11 +247,20 @@ export default function Selector() {
                 >
                   <div className={`relative ${ancho ? "aspect-[16/7]" : "aspect-[16/10]"}`}>
                     <div
-                      className={`h-full w-full transition duration-700 ${
+                      className={`relative h-full w-full transition duration-700 ${
                         bloqueado ? "scale-105 blur-[2px] brightness-[0.18] grayscale" : ""
                       }`}
                     >
                       <Escena tipo={a.escena} />
+                      <img
+                        src={urlFoto(a.foto.id)}
+                        srcSet={`${urlFoto(a.foto.id, 600)} 600w, ${urlFoto(a.foto.id, 900)} 900w, ${urlFoto(a.foto.id, 1400)} 1400w`}
+                        sizes={ancho ? "(min-width: 1024px) 660px, 100vw" : "(min-width: 1024px) 330px, (min-width: 640px) 50vw, 100vw"}
+                        alt={bloqueado ? "" : `Ambiente ${a.nombre}`}
+                        loading="lazy"
+                        onError={(e) => (e.currentTarget.style.display = "none")}
+                        className="absolute inset-0 h-full w-full object-cover"
+                      />
                     </div>
 
                     {/* Luz según el horario elegido */}
@@ -316,7 +326,8 @@ export default function Selector() {
             })}
           </ul>
           <p className="mt-6 text-sm text-bruma/70">
-            Las imágenes son ilustrativas. Te compartimos fotos reales de cada ubicación por WhatsApp.
+            Fotos de muestra para ilustrar cada ambiente (Unsplash). Te compartimos el catálogo con
+            las ubicaciones reales por WhatsApp.
           </p>
         </div>
       </div>

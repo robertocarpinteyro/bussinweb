@@ -26,7 +26,8 @@ export interface Ambiente {
   nombre: string;
   descripcion: string;
   catalogo: Catalogo;
-  escena: Escena;
+  escena: Escena; // ilustración de respaldo si la foto no carga
+  foto: { id: string; autor: string };
 }
 
 export const ambientes: Ambiente[] = [
@@ -36,6 +37,7 @@ export const ambientes: Ambiente[] = [
     descripcion: "Luces de color y una vibra nocturna.",
     catalogo: "basico",
     escena: "neon",
+    foto: { id: "photo-1734943451393-0f922a7ea5a0", autor: "Pongracz Noemi" },
   },
   {
     id: "calido",
@@ -43,6 +45,7 @@ export const ambientes: Ambiente[] = [
     descripcion: "Tonos tierra, texturas y luz suave.",
     catalogo: "basico",
     escena: "terracota",
+    foto: { id: "photo-1631642659688-ea5ee49f099e", autor: "Matthieu Lemarchal" },
   },
   {
     id: "urbano",
@@ -50,6 +53,7 @@ export const ambientes: Ambiente[] = [
     descripcion: "Ventanales con la ciudad de fondo.",
     catalogo: "especial",
     escena: "loft",
+    foto: { id: "photo-1771287490603-fbf9b6211cc3", autor: "Franco Debartolo" },
   },
   {
     id: "agua",
@@ -57,6 +61,7 @@ export const ambientes: Ambiente[] = [
     descripcion: "Reflejos, vapor y luz ambiental.",
     catalogo: "especial",
     escena: "jacuzzi",
+    foto: { id: "photo-1646974400439-8472d58bb19e", autor: "Masato Tsuchiya" },
   },
   {
     id: "lujo",
@@ -64,8 +69,13 @@ export const ambientes: Ambiente[] = [
     descripcion: "Espacios amplios con acabados de lujo.",
     catalogo: "especial",
     escena: "mansion",
+    foto: { id: "photo-1700586834181-1a2f3bd87eda", autor: "reza pratama" },
   },
 ];
+
+// Fotos de muestra de Unsplash (licencia libre). Se reemplazan por las reales.
+export const urlFoto = (id: string, ancho = 900) =>
+  `https://images.unsplash.com/${id}?w=${ancho}&q=75&auto=format&fit=crop`;
 
 export const nombreCatalogo: Record<Catalogo, string> = {
   basico: "Básico",
